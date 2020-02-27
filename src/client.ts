@@ -51,6 +51,13 @@ interface IMessageQueueEntry {
 }
 
 export class Client extends EventEmitter {
+	public static async CreateSave(dataPath: string, toxcorePath: string) {
+		const save = promisifyAll(new Toxcore.Tox({
+			path: toxcorePath,
+		}));
+		await save.saveToFileAsync(dataPath);
+	}
+
 	private tox: Toxcore.Tox;
 	private hexFriendLut: Map<string, number>;
 	private friendsStatus: Map<number, boolean>;
