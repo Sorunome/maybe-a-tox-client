@@ -19,6 +19,8 @@
   "dependencies": {
     "events": "^3.0.0",
     "js-toxcore-c": "git+https://github.com/TokTok/js-toxcore-c.git#4a1e9be1abc44f91d651741d8235a0141ff54538",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.5",
     "util-promisifyall": "^1.0.6"
   },
   "devDependencies": {
