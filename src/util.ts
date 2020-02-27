@@ -16,6 +16,8 @@ import * as fs from "fs";
 import { DefaultNodes } from "./defaultnodes";
 import { IBootstrapNode } from "./client";
 import { Logger } from "./logger";
+import * as promisifyAll from "util-promisifyall";
+import * as Toxcore from "js-toxcore-c";
 
 const log = new Logger("Util");
 
@@ -70,5 +72,12 @@ export class Util {
 		} catch (err) {
 			log.error("Unable to write new nodes file", err);
 		}
+	}
+
+	public static async CreateSave(dataPath: string, toxcorePath: string) {
+		const save = promisifyAll(new Toxcore.Tox({
+			path: toxcorePath,
+		}));
+		await save.saveToFileAsync(dataPath);
 	}
 }

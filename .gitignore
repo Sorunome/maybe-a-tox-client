@@ -2,6 +2,7 @@ config.yaml
 tox-registration.yaml
 node_modules
 build
+lib
 *.db
 nodes.json
 toxsaves

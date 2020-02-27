@@ -51,13 +51,6 @@ interface IMessageQueueEntry {
 }
 
 export class Client extends EventEmitter {
-	public static async CreateSave(dataPath: string, toxcorePath: string) {
-		const save = promisifyAll(new Toxcore.Tox({
-			path: toxcorePath,
-		}));
-		await save.saveToFileAsync(dataPath);
-	}
-
 	private tox: Toxcore.Tox;
 	private hexFriendLut: Map<string, number>;
 	private friendsStatus: Map<number, boolean>;
@@ -95,8 +88,8 @@ export class Client extends EventEmitter {
 		});
 
 		this.tox.on("friendRequest", async (e) => {
-			const key = e.publicKey();
-			this.emit("friendRequest", key);
+			const key = e.publicKeyHex();
+			this.emit("friendRequest", key, e.message());
 		});
 
 		this.tox.on("friendConnectionStatus", async (e) => {
@@ -366,8 +359,17 @@ export class Client extends EventEmitter {
 		await this.saveToFile();
 	}
 
-	public async addFriend(hex: string) {
-		await this.tox.addFriendAsync(hex);
+	public async addFriend(hex: string, message: string) {
+		await this.tox.addFriendAsync(hex, message);
+		await this.saveToFile();
+	}
+
+	public async deleteFriend(hex: string) {
+		const friend = await this.getFriend(hex);
+		if (friend === null) {
+			throw new Error("Can't delete unknown friend");
+		}
+		await this.tox.deleteFriendAsync(friend);
 		await this.saveToFile();
 	}
 

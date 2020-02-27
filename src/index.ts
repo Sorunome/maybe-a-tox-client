@@ -13,3 +13,4 @@ limitations under the License.
 
 export * from "./client";
 export * from "./logger";
+export * from "./util";

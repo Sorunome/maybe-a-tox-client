@@ -4,8 +4,8 @@
         "moduleResolution": "node",
         "target": "es2016",
         "noImplicitAny": false,
-        "inlineSourceMap": true,
-        "outDir": "./build",
+        "declaration": true,
+        "outDir": "./lib",
         "types": ["node"],
         "strictNullChecks": true,
         "allowSyntheticDefaultImports": true
@@ -13,5 +13,6 @@
     "compileOnSave": true,
     "include": [
         "src/**/*",
+        "test/**/*",
     ]
 }
