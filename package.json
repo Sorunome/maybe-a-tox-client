@@ -1,0 +1,33 @@
+{
+  "name": "toxclient",
+  "version": "0.0.0",
+  "description": "A higher level Tox client",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sorunome/toxclient"
+  },
+  "bugs": {
+    "url": "https://github.com/Sorunome/toxclient/issues"
+  },
+  "main": "./lib/index.js",
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "build": "tsc",
+    "lint": "tslint --project ./tsconfig.json -t stylish"
+  },
+  "author": "Sorunome",
+  "dependencies": {
+    "events": "^3.0.0",
+    "js-toxcore-c": "git+https://github.com/TokTok/js-toxcore-c.git#4a1e9be1abc44f91d651741d8235a0141ff54538",
+    "util-promisifyall": "^1.0.6"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.8",
+    "tslint": "^5.17.0",
+    "typescript": "^3.7.4"
+  },
+  "files": [
+    "src/*",
+    "lib/*"
+  ]
+}
