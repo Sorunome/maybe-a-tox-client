@@ -58,6 +58,7 @@ export class Client extends EventEmitter {
 	private friendsMessageQueue: Map<number, IMessageQueueEntry[]>;
 	private avatarUrl: string = "";
 	private avatarBuffer: Buffer;
+	private isConnected: boolean = false;
 	constructor(
 		private dataPath: string,
 		private nodesPath: string,
@@ -75,6 +76,7 @@ export class Client extends EventEmitter {
 	}
 
 	public async connect() {
+		this.isConnected = false;
 		await this.bootstrap();
 
 		this.tox.on("friendName", async (e) => {
@@ -166,15 +168,29 @@ export class Client extends EventEmitter {
 			this.emit("friendTyping", key, e.isTyping());
 		});
 
+		let connectTimeout: NodeJS.Timeout | null = null;
 		this.tox.on("selfConnectionStatus", async (e) => {
-			const status = e.isConnected() ? "connected" : "disconnected";
-			log.verbose(`New connection status: ${status}!`);
+			log.verbose(`New connection status: online=${e.isConnected()}!`);
 			if (e.isConnected()) {
 				await this.populateFriendList();
-			}
-			this.emit(status, await this.getFullPubKey());
-			if (!e.isConnected()) {
+				if (this.isConnected) {
+					if (connectTimeout !== null) {
+						clearTimeout(connectTimeout);
+					}
+				} else {
+					this.isConnected = true;
+					this.emit("connected", await this.getFullPubKey());
+				}
+			} else {
 				log.info(`Lost connection, reconnecting...`);
+				const THIRTY_SEC = 30000;
+				if (connectTimeout === null) {
+					connectTimeout = setTimeout(() => {
+						this.isConnected = false;
+						this.emit("disconnected");
+						connectTimeout = null;
+					}, THIRTY_SEC);
+				}
 				try {
 					await this.bootstrap();
 					await this.tox.start();

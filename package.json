@@ -1,6 +1,6 @@
 {
   "name": "toxclient",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A higher level Tox client",
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
   "author": "Sorunome",
   "dependencies": {
     "events": "^3.0.0",
-    "js-toxcore-c": "git+https://github.com/TokTok/js-toxcore-c.git#4a1e9be1abc44f91d651741d8235a0141ff54538",
+    "js-toxcore-c": "git+https://github.com/TokTok/js-toxcore-c.git#d6b7d5882faa54157c3521cbcfb9c145c64c2270",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
     "util-promisifyall": "^1.0.6"
