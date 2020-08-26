@@ -413,15 +413,19 @@ export class Client extends EventEmitter {
 		}
 		log.verbose(`Setting avatar to ${url}`);
 		this.avatarUrl = url;
-		const buffer = await Util.DownloadFile(url);
-		if (!buffer) {
-			log.warn("Avatar buffer is empty");
-			return;
+		try {
+			const buffer = await Util.DownloadFile(url);
+			if (!buffer) {
+				log.warn("Avatar buffer is empty");
+				return;
+			}
+			this.avatarBuffer = buffer;
+			// we do this async in the background
+			// tslint:disable-next-line:no-floating-promises
+			this.sendAvatarUpdate();
+		} catch (err) {
+			log.warn("Failed to download avatar");
 		}
-		this.avatarBuffer = buffer;
-		// we do this async in the background
-		// tslint:disable-next-line:no-floating-promises
-		this.sendAvatarUpdate();
 	}
 
 	public async saveToFile() {

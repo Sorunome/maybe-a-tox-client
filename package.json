@@ -1,6 +1,6 @@
 {
   "name": "toxclient",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A higher level Tox client",
   "repository": {
     "type": "git",
