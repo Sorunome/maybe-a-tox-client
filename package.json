@@ -1,5 +1,5 @@
 {
-  "name": "toxclient",
+  "name": "maybe-a-tox-client",
   "version": "0.0.2",
   "description": "A higher level Tox client",
   "repository": {
