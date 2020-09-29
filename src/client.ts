@@ -261,9 +261,10 @@ export class Client extends EventEmitter {
 				}
 			} catch (err) {
 				log.error(`Error sending file with key ${fileKey} (length=${length} position=${position})`, err);
-				log.error("Canceling request...");
-				await this.tox.controlFileAsync(e.friend(), e.file(), "cancel");
-				this.files.delete(fileKey);
+				log.error("Let's pretend nothing happened, maybe this actually fixes some error?");
+//				log.error("Canceling request...");
+//				await this.tox.controlFileAsync(e.friend(), e.file(), "cancel");
+//				this.files.delete(fileKey);
 				return;
 			}
 		});
